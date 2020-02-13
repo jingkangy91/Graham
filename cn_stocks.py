@@ -6,8 +6,12 @@ current_date = '2020-02-12'
 
 engine = create_engine('mysql+pymysql://root:jkl@localhost:3306/stocks')
 
+# sql = '''
+#     select * from cn_base where `日期` = '{0}';
+# '''.format(current_date)
+
 sql = '''
-    select * from cn_base where `日期` = '{0}';
+    select b.*, i.`最小成交单位` from cn_base b left join cn_info i on b.`代码`=i.`代码` where b.`日期`='{0}';
 '''.format(current_date)
 
 df = pd.read_sql_query(sql, engine)
