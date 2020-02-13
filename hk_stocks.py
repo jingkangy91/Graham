@@ -3,11 +3,11 @@ from sqlalchemy import create_engine
 
 ## Parameters define
 # current_date = '2020-02-09'
-current_date = '2020-02-12'
-total_amount = 12000
-num_of_stocks = 10
+current_date = '2020-02-13'
+total_amount = 380000
+num_of_stocks = 26
 buy_amount = total_amount / num_of_stocks
-out_name = current_date + '_cn_stocks.xlsx'
+out_name = current_date + '_hk_stocks.xlsx'
 
 engine = create_engine('mysql+pymysql://root:jkl@localhost:3306/stocks')
 
@@ -16,7 +16,7 @@ engine = create_engine('mysql+pymysql://root:jkl@localhost:3306/stocks')
 # '''.format(current_date)
 
 sql = '''
-    select s.*, i.`最小成交单位` from cn_stock s left join cn_info i on s.`代码`=i.`代码` where s.`日期`='{0}';
+    select s.*, i.`最小成交单位` from hk_stock s left join hk_info i on s.`代码`=i.`代码` where s.`日期`='{0}';
 '''.format(current_date)
 
 df = pd.read_sql_query(sql, engine)
@@ -36,6 +36,8 @@ df.sort_values(by=['总分'], ascending=0, inplace=True)
 df['行业重复'] = df.groupby(['行业'])['总分'].rank(ascending=0, method='first').astype(int)
 
 df = df[df['行业重复']<=1].iloc[0:num_of_stocks]
+
+print(df)
 
 ## Calculate buy amount
 df['计划买入'] = buy_amount
