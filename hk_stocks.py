@@ -5,7 +5,11 @@ from sqlalchemy import create_engine
 # current_date = '2020-02-09'
 current_date = '2020-02-13'
 total_amount = 380000
-num_of_stocks = 26
+num_of_stocks = 20
+# num_of_stocks = 25
+# num_of_stocks = 26
+# num_of_stocks = 27
+# num_of_stocks = 30
 buy_amount = total_amount / num_of_stocks
 out_name = current_date + '_hk_stocks.xlsx'
 
@@ -35,9 +39,10 @@ df.sort_values(by=['总分'], ascending=0, inplace=True)
 
 df['行业重复'] = df.groupby(['行业'])['总分'].rank(ascending=0, method='first').astype(int)
 
-df = df[df['行业重复']<=1].iloc[0:num_of_stocks]
+# df = df[df['行业重复']<=1].iloc[0:num_of_stocks]
+df = df[df['行业重复']<=2].iloc[0:num_of_stocks]
 
-print(df)
+# print(df)
 
 ## Calculate buy amount
 df['计划买入'] = buy_amount
