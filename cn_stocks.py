@@ -1,8 +1,12 @@
 import pandas as pd
 from sqlalchemy import create_engine
 
+## Parameters define
 # current_date = '2020-02-09'
 current_date = '2020-02-12'
+total_amount = 12000
+num_of_stocks = 10
+buy_amount = total_amount / num_of_stocks
 
 engine = create_engine('mysql+pymysql://root:jkl@localhost:3306/stocks')
 
@@ -16,6 +20,7 @@ sql = '''
 
 df = pd.read_sql_query(sql, engine)
 
+## Calculate PE, PB, DY and total scores.
 # df['PE分'] = df.sort_values(['PE-TTM(扣非)'], ascending=True).cumcount()
 df.sort_values(by=['PE-TTM(扣非)'], inplace=True)
 df['PE分'] = df.reset_index().index.map(lambda x: 100-x)
@@ -27,10 +32,16 @@ df['DY分'] = df.reset_index().index.map(lambda x: 100-x)
 df['总分'] = df['PE分'] + df['PB分'] + df['DY分']
 df.sort_values(by=['总分'], ascending=0, inplace=True)
 
-df['行业重复'] = df.groupby(['行业'])['总分'].rank(ascending=0, method='first')
+df['行业重复'] = df.groupby(['行业'])['总分'].rank(ascending=0, method='first').astype(int)
 
-print(df)
+df = df[df['行业重复']<=1].iloc[0:num_of_stocks]
 
-df = df[df['行业重复']<=1].iloc[0:30]
-df.to_excel('./test.xlsx', index=False)
+## Calculate buy amount
+df['计划买入'] = buy_amount
+df['折合手数'] = round(df['计划买入']/(df['股价'] * df['最小成交单位']),0).astype(int)
+df['买入股数'] = df['折合手数'] * df['最小成交单位']
+df['实际买入'] = df['买入股数'] * df['股价']
+
 # print(df)
+# print(sum(df['实际买入']))
+df.to_excel('./test.xlsx', index=False)
