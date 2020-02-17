@@ -3,8 +3,11 @@ from sqlalchemy import create_engine
 
 ## Parameters define
 # current_date = '2020-02-09'
-current_date = '2020-02-13'
-total_amount = 380000
+# current_date = '2020-02-13'
+current_date = '2020-02-16'
+
+# Profile 1
+total_amount = 382315
 num_of_stocks = 20
 # num_of_stocks = 25
 # num_of_stocks = 26
@@ -43,6 +46,7 @@ df['行业重复'] = df.groupby(['行业'])['总分'].rank(ascending=0, method='
 df = df[df['行业重复']<=2].iloc[0:num_of_stocks]
 
 # print(df)
+# df.to_excel('./test.xlsx', index=False)
 
 ## Calculate buy amount
 df['计划买入'] = buy_amount
@@ -52,5 +56,4 @@ df['实际买入'] = df['买入股数'] * df['股价']
 
 # print(df)
 # print(sum(df['实际买入']))
-# df.to_excel('./test.xlsx', index=False)
 df.to_excel(out_name, index=False)
