@@ -13,7 +13,8 @@ current_date = '2020-03-01'
 # num_of_stocks = 15
 
 # Profile 2
-total_amount = 12000
+total_amount = 11000
+# total_amount = 10000
 num_of_stocks = 10
 
 buy_amount = total_amount / num_of_stocks
