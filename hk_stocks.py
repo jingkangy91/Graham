@@ -4,15 +4,23 @@ from sqlalchemy import create_engine
 ## Parameters define
 # current_date = '2020-02-09'
 # current_date = '2020-02-13'
-current_date = '2020-02-16'
+# current_date = '2020-02-16'
+current_date = '2020-03-15'
 
 # Profile 1
-total_amount = 382315
-num_of_stocks = 20
+# total_amount = 382315
+# total_amount = 337782.35
+
+# num_of_stocks = 20
 # num_of_stocks = 25
 # num_of_stocks = 26
 # num_of_stocks = 27
 # num_of_stocks = 30
+
+# Profile 2
+total_amount = 299046
+num_of_stocks = 10
+
 buy_amount = total_amount / num_of_stocks
 out_name = current_date + '_hk_stocks.xlsx'
 
