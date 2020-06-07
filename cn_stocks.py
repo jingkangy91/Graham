@@ -6,7 +6,8 @@ from sqlalchemy import create_engine
 # current_date = '2020-02-12'
 # current_date = '2020-02-16'
 # current_date = '2020-02-26'
-current_date = '2020-03-01'
+# current_date = '2020-03-01'
+current_date = '2020-06-07'
 
 # Profile 1
 # total_amount = 133000
