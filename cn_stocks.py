@@ -14,9 +14,10 @@ current_date = '2020-06-07'
 # num_of_stocks = 15
 
 # Profile 2
-total_amount = 11000
+total_amount = 13000
 # total_amount = 10000
-num_of_stocks = 10
+# num_of_stocks = 10
+num_of_stocks = 11
 
 buy_amount = total_amount / num_of_stocks
 out_name = current_date + '_cn_stocks.xlsx'
